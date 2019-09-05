@@ -6,18 +6,33 @@
     </head>
    
     <body>
-        Voici le résultat du script PHP : 
+         
         <?php
-          // Ceci est un commentaire PHP sur une ligne
-          /* Ceci est le 2ème type de commentaire PHP
-          sur plusieurs lignes */
-           
-          // On met la chaine de caractères "hello" dans la variable 'texte'
-          // Les noms de variable commencent par $ en PHP
-          $texte = "hello world !";
 
-          // On écrit le contenu de la variable 'texte' dans la page Web
-          echo $texte;
-        ?>
+        $tab = array (
+          'Voiture1'=>['immatriculation' => 'AA22233', 'couleur' => 'rouge', 'marque' => 'peugeot'],
+          'Voiture2'=>['immatriculation' => 'AA
+          ', 'couleur' => 'verte','marque' => 'renault'],
+          'Voiture3'=>['immatriculation' => 'BB456zd', 'couleur' => 'gris','marque' => 'toyota'],
+            );
+        echo '<pre>';
+        print_r($tab);
+        echo '</pre>';
+
+      if (!array_key_exists('Voiture1', $tab)) {
+        echo "le tableau est vide";
+        }
+      else {
+        echo "<p>Liste de Voiture : </p><ul>";
+        foreach ($tab as $key1 => $value1) {
+          echo " <li> $key1 :</li>";
+
+          foreach ($value1 as $key => $value) {
+            echo "$key  :  $value   ";
+          }
+        }
+        echo "</ul>";
+      }
+          ?>
     </body>
 </html> 
