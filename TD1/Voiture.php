@@ -24,7 +24,7 @@ class Voiture {
            
   // une methode d'affichage.
   public function afficher() {
-    // À compléter dans le prochain exercice
+    echo "immatriculation voiture : $this->immatriculation, couleur : $this->couleur marque : $this->marque" ;
   }
 
   public function getcouleur(){
@@ -32,7 +32,18 @@ class Voiture {
   }
 
   public function setcouleur( $newcolor){
-    $this->couleur=$newcolor
+    $this->couleur=$newcolor;
   }
+  public function getimmatriculation(){
+    return $this->immatriculation;
+  }
+
+  public function setimmatriculation( $newim){
+    if (strlen($newim)<=8) {
+      $this->immatriculation=$newim;
+    }
+  }
+
+
 }
 ?>
