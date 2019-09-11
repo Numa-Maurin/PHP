@@ -5,6 +5,7 @@
         <title>testVoiture</title>
     </head>
     <body>
+
        <?php
         	require_once('./Voiture.php'); 
         	$voiture1 = new Voiture('peugeot','grise','AA207');
