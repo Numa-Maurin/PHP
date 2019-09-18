@@ -1,15 +1,16 @@
 <?php
 require_once 'Model.php';
+require_once 'Voiture.php';
 
-	$rep=Model::$pdo::query("SELECT * FROM voiture");
-	$tab_obj = $rep->fetchAll(PDO::FETCH_OBJ);
-	
-	foreach ($tab_obj as $key1 => $value1) {
-          echo " <li> $key1 :</li>";
+	$sql='SELECT * FROM voiture';
+	$rep=(Model::$pdo)->query($sql);
+	$rep->setFetchMode(PDO::FETCH_CLASS, 'Voiture');
+	$tab_voit = $rep->fetchAll();
 
-          foreach ($value1 as $key => $value) {
-            echo "$key  :  $value   ";
-          }
+	var_dump($tab_voit);
+
+	foreach ($tab_voit as $key1 => $value1) {
+        $value1->afficher();
     }
 
 ?>
