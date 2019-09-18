@@ -1,4 +1,5 @@
 <?php
+require_once 'Model.php';
 class Voiture {
    
   private $marque;
@@ -46,6 +47,17 @@ class Voiture {
   public function setimmatriculation( $newim){
     if (strlen($newim)<=8) {
       $this->immatriculation=$newim;
+    }
+  }
+
+  public static function getAllVoitures()
+  {
+      $sql='SELECT * FROM voiture';
+      $rep=(Model::$pdo)->query($sql);
+      $rep->setFetchMode(PDO::FETCH_CLASS, 'Voiture');
+      $tab_voit = $rep->fetchAll();
+      foreach ($tab_voit as $key1 => $value1) {
+        $value1->afficher();
     }
   }
 
