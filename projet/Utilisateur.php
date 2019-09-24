@@ -25,7 +25,8 @@ class Utilisateur {
   }
 
     public function afficherUtilisateur() {
-    echo "id utilisateur : $this->id, nom : $this->nom, prenom : $this->prenom" ;
+    echo "login utilisateur : $this->login, nom : $this->nom, prenom : $this->prenom" ;
+    echo "</br>";
   }
  
 }
