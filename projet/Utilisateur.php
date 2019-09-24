@@ -13,18 +13,18 @@ class Utilisateur {
     }
   }
 
-    public static function getAllVoitures()
+    public static function getAllUtilisateurs()
   {
       $sql='SELECT * FROM utilisateur';
       $rep=(Model::$pdo)->query($sql);
       $rep->setFetchMode(PDO::FETCH_CLASS, 'Utilisateur');
       $tab_utilisateur = $rep->fetchAll();
       foreach ($tab_utilisateur as $key1 => $value1) {
-        $value1->afficher();
+        $value1->afficherUtilisateur();
     }
   }
 
-    public function afficher() {
+    public function afficherUtilisateur() {
     echo "id utilisateur : $this->id, nom : $this->nom, prenom : $this->prenom" ;
   }
  
