@@ -60,4 +60,42 @@ class Trajet {
             die();
         }
     }
+
+
+    public static function findPassagers($id){
+        try {
+                $sql = 
+                "SELECT utilisateur.login,utilisateur.nom,utilisateur.prenom
+                FROM utilisateur 
+                INNER JOIN passager ON utilisateur.login=passager.utilisateur_login 
+                WHERE trajet_id=:id_tag ";
+                // Préparation de la requête
+                $req_prep = Model::$pdo->prepare($sql);
+
+                $values = array(
+                    "id_tag" => $id,
+                );
+                // On donne les valeurs et on exécute la requête   
+                $req_prep->execute($values);
+
+                // On récupère les résultats comme précédemment
+                $req_prep->setFetchMode(PDO::FETCH_CLASS, 'Utilisateur');
+                $tab_traj = $req_prep->fetchAll();
+                // Attention, si il n'y a pas de résultats, on renvoie false
+                if (empty($tab_traj))
+                {
+                    return false;
+                }
+                else{
+                    return $tab_traj;
+                }
+        } catch (PDOException $e) {
+            if (Conf::getDebug()) {
+                echo $e->getMessage(); // affiche un message d'erreur
+            } else {
+                echo 'Une erreur est survenue <a href=""> retour a la page d\'accueil </a>';
+            }
+            die();
+        }
+    }
 }
