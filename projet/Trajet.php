@@ -1,51 +1,63 @@
 <?php
+
 require_once 'Model.php';
+require_once 'Utilisateur.php';
+
 class Trajet {
-   private $id;
-   private $depart;
-   private $arrivee;
-   private $date;
-   private $nbplaces;
-   private $prix;
-   private $conducteur_login;
 
-public function get($nom_attribut){
-	return $this->$nom_attribut;
+    private $id;
+    private $depart;
+    private $arrivee;
+    private $date;
+    private $nbplaces;
+    private $prix;
+    private $conducteur_login;
+
+    // Getter générique (pas expliqué en TD)
+    public function get($nom_attribut) {
+        if (property_exists($this, $nom_attribut))
+            return $this->$nom_attribut;
+        return false;
+    }
+
+    // Setter générique (pas expliqué en TD)
+    public function set($nom_attribut, $valeur) {
+        if (property_exists($this, $nom_attribut))
+            $this->$nom_attribut = $valeur;
+        return false;
+    }
+
+    // un constructeur
+    public function __construct($data = array()) {
+        if (!empty($data)) {
+            $this->id = $data["id"];
+            $this->depart = $data["depart"];
+            $this->arrivee = $data["arrivee"];
+            $this->date = $data["date"];
+            $this->nbplaces = $data["nbplaces"];
+            $this->prix = $data["prix"];
+            $this->conducteur_login = $data["conducteur_login"];
+        }
+    }
+    // une methode d'affichage.
+    public function afficher() {
+        echo "Ce trajet du {$this->date} partira de {$this->depart} pour aller à {$this->arrivee}.";
+    }
+
+    public static function getAllTrajets() {
+        try {
+            $pdo = Model::$pdo;
+            $sql = "SELECT * from trajet";
+            $rep = $pdo->query($sql);
+            $rep->setFetchMode(PDO::FETCH_CLASS, 'Trajet');
+            return $rep->fetchAll();
+        } catch (PDOException $e) {
+            if (Conf::getDebug()) {
+                echo $e->getMessage(); // affiche un message d'erreur
+            } else {
+                echo 'Une erreur est survenue <a href=""> retour a la page d\'accueil </a>';
+            }
+            die();
+        }
+    }
 }
-
-public function set($nom_attribut,$value){
-	$this->$nom_attribut=$value;
-}
-
-public function __construct($data)
-{
-	if (!is_null($data["id"]) && !is_null($data["depart"]) && !is_null($data["arrivee"]) && !is_null($data["date"]) && !is_null($data["nbplaces"]) && !is_null($data["prix"]) && !is_null($data["conducteur_login"])) {
-  		$this->$id=$data["id"];
-  		$this->$depart=$data["depart"];
-  		$this->$arrivee=$data["arrivee"];
-  		$this->$date=$data["date"];
-  		$this->$nbplaces=$data["nbplaces"];
-  		$this->$prix=$data["prix"];
-  		$this->$conducteur_login=$data["conducteur_login"];
-	}
-}
-
-    public static function getAllTrajets()
-  {
-      $sql='SELECT * FROM trajet';
-      $rep=(Model::$pdo)->query($sql);
-      $rep->setFetchMode(PDO::FETCH_CLASS, 'Trajet');
-      $tab_trajet = $rep->fetchAll();
-      foreach ($tab_trajet as $key1 => $value1) {
-        $value1->afficherTrajet();
-      }
-  }
-
-    public function afficherTrajet() {
-    echo "id trajet : $this->id, depart : $this->depart, arrivee : $this->arrivee, date : $this->date, nbplaces : $this->nbplaces, prix : $this->prix, conducteur_login : $this->conducteur_login" ;
-    echo "</br>";
-  }
-
-}
-
-?>

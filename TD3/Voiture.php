@@ -87,9 +87,9 @@ class Voiture {
     $sql1="INSERT INTO voiture(immatriculation,couleur,marque) VALUES (:immat,:coul,:marque)";
     $req_prep1 = Model::$pdo->prepare($sql1);
     $values1 = array(
-      "immat" => (this->immatriculation),
-      "coul" => (this->couleur),
-      "marque" => (this->marque),
+      "immat"=>($this->immatriculation),
+      "coul"=>($this->couleur),
+      "marque"=>($this->marque),
     );
     // On donne les valeurs et on exécute la requête   
     $req_prep1->execute($values1);

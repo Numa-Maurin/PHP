@@ -1,33 +1,56 @@
 <?php
+
 require_once 'Model.php';
+require_once 'Trajet.php';
+
 class Utilisateur {
-   private $login;
-   private $nom;
-   private $prenom;
 
-  public function __construct($l = NULL, $n = NULL, $p = NULL) {
-    if (!is_null($l) && !is_null($n) && !is_null($p)) {
-      $this->login = $l;
-      $this->nom = $n;
-      $this->penom = $p;
+    private $login;
+    private $nom;
+    private $prenom;
+
+    // Getter générique (pas expliqué en TD)
+    public function get($nom_attribut) {
+        if (property_exists($this, $nom_attribut))
+            return $this->$nom_attribut;
+        return false;
     }
-  }
 
-    public static function getAllUtilisateurs()
-  {
-      $sql='SELECT * FROM utilisateur';
-      $rep=(Model::$pdo)->query($sql);
-      $rep->setFetchMode(PDO::FETCH_CLASS, 'Utilisateur');
-      $tab_utilisateur = $rep->fetchAll();
-      foreach ($tab_utilisateur as $key1 => $value1) {
-        $value1->afficherUtilisateur();
+    // Setter générique (pas expliqué en TD)
+    public function set($nom_attribut, $valeur) {
+        if (property_exists($this, $nom_attribut))
+            $this->$nom_attribut = $valeur;
+        return false;
     }
-  }
 
-    public function afficherUtilisateur() {
-    echo "login utilisateur : $this->login, nom : $this->nom, prenom : $this->prenom" ;
-    echo "</br>";
-  }
- 
+    // un constructeur
+    public function __construct($login = NULL, $nom = NULL, $prenom = NULL) {
+        if (!is_null($login) && !is_null($nom) && !is_null($prenom)) {
+            $this->login = $login;
+            $this->nom = $nom;
+            $this->prenom = $prenom;
+        }
+    }
+
+    // une methode d'affichage.
+    public function afficher() {
+        echo "Utilisateur {$this->prenom} {$this->nom} de login {$this->login}";
+    }
+
+    public static function getAllUtilisateurs() {
+        try {
+            $pdo = Model::$pdo;
+            $sql = "SELECT * from utilisateur";
+            $rep = $pdo->query($sql);
+            $rep->setFetchMode(PDO::FETCH_CLASS, 'Utilisateur');
+            return $rep->fetchAll();
+        } catch (PDOException $e) {
+            if (Conf::getDebug()) {
+                echo $e->getMessage(); // affiche un message d'erreur
+            } else {
+                echo 'Une erreur est survenue <a href=""> retour a la page d\'accueil </a>';
+            }
+            die();
+        }
+    }
 }
-?>
