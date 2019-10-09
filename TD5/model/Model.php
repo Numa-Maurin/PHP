@@ -1,5 +1,6 @@
 <?php
-require_once '../config/Conf.php';
+	$cheminConf = array('config','Conf.php' );
+	require_once (File::build_path($cheminConf));
 
 class Model {
 
