@@ -5,25 +5,39 @@ require_once (File::build_path($cheminModelVoiture));
 class controllerVoiture {
     public static function readAll() {
         $tab_v = ModelVoiture::getAllVoitures();     //appel au modèle pour gerer la BD
-        $cheminlist = array('view','voiture','list.php' );
-        require (File::build_path($cheminlist));  //"redirige" vers la vue
+        $controller='voiture';
+        $view='list';
+        $pagetitle='Liste des voitures';
+        $cheminview = array('view','view.php' );
+        require (File::build_path($cheminview));  
+        //"redirige" vers la vue
     }
 
     public static function read() {
         $v = ModelVoiture::getVoitureByImmat($_GET["immat"]);     //appel au modèle pour gerer la BD
         if ($v==false) {
-            $cheminerror = array('view','voiture','error.php' );
-        	require (File::build_path($cheminerror));  //"redirige" vers la vue d'erreur
+            $controller='voiture';
+            $view='error';
+            $pagetitle='Page erreur';
+            $cheminview = array('view','view.php' );
+            require (File::build_path($cheminview));   //"redirige" vers la vue d'erreur
         }
         else{
-            $chemindetail = array('view','voiture','detail.php');
-        	require (File::build_path($chemindetail));  //"redirige" vers la vue
+            $controller='voiture';
+            $view='detail';
+            $pagetitle='Page de detail';
+            $cheminview = array('view','view.php' );
+            require (File::build_path($cheminview));
+  //"redirige" vers la vue
         }
     }
 
     public static function create(){
-        $chemincreat = array('view','voiture','create.php' );
-    	require (File::build_path($chemincreat));
+        $controller='voiture';
+        $view='create';
+        $pagetitle='Création d\'une voiture';
+        $cheminview = array('view','view.php' );
+        require (File::build_path($cheminview));
     }
 
     public static function created(){
@@ -32,7 +46,13 @@ class controllerVoiture {
     	$marque =$_GET["marque"];
     	$v1=new ModelVoiture($marque,$couleur,$immat);
     	$v1->save();
-		ControllerVoiture::readAll();
+        
+        $tab_v = ModelVoiture::getAllVoitures();
+        $controller='voiture';
+        $view='created';
+        $pagetitle='Validation';
+        $cheminview = array('view','view.php' );
+        require (File::build_path($cheminview));
     }
 
 }

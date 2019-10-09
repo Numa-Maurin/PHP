@@ -1,10 +1,5 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <title>Formulaire</title>
-    </head>
-   
     <body>
 
          <form method="GET">
@@ -26,9 +21,5 @@
             </p>
           </fieldset> 
         </form>
-
-        <?php
-
-          ?>
     </body>
 </html> 
