@@ -55,5 +55,26 @@ class controllerVoiture {
         require (File::build_path($cheminview));
     }
 
+    public static function error(){
+        $controller='voiture';
+        $view='error';
+        $pagetitle='Page erreur';
+        $cheminview = array('view','view.php' );
+        require (File::build_path($cheminview));   //"redirige" vers la vue d'erreur
+    }
+
+    public static function delete()
+    {
+        $immat =$_GET["immat"];
+        ModelVoiture::deleteByImmat($immat); 
+
+        $tab_v = ModelVoiture::getAllVoitures();
+        $controller='voiture';
+        $view='deleted';
+        $pagetitle='Validation de supression';
+        $cheminview = array('view','view.php' );
+        require (File::build_path($cheminview));
+    }
+
 }
 ?>

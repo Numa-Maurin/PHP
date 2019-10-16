@@ -2,7 +2,7 @@
 <html>
     <body>
         <?php
-            echo "<p> Erreur sur immatriculation voiture";
+            echo "<p> Erreur ";
         ?>
     </body>
 </html>

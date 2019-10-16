@@ -94,5 +94,18 @@ class ModelVoiture {
     $req_prep1->execute($values1);
   }
 
+  public static function deleteByImmat($immat)
+  {
+    $sql1="DELETE FROM voiture WHERE immatriculation=:nom_tag";
+    // Préparation de la requête
+    $req_prep = Model::$pdo->prepare($sql1);
+
+    $values = array(
+        "nom_tag" => $immat,
+        //nomdutag => valeur, ...
+    );
+    // On donne les valeurs et on exécute la requête   
+    $req_prep->execute($values);
+  }
 }
 ?>
