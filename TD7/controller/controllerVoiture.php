@@ -77,5 +77,33 @@ class controllerVoiture {
         require (File::build_path($cheminview));
     }
 
+    public static function update()
+    {
+        $v = ModelVoiture::getVoitureByImmat(htmlspecialchars($_GET["immat"]));
+
+        $controller='voiture';
+        $view='update';
+        $pagetitle='Modification';
+        $cheminview = array('view','view.php' );
+        require (File::build_path($cheminview));
+    }
+
+    public static function updated(){
+        $immat =$_GET["immatriculation"];
+        ModelVoiture::deleteByImmat($immat);
+
+        $immat =$_GET["immatriculation"];
+        $couleur =$_GET["couleur"];
+        $marque =$_GET["marque"];
+        $v1=new ModelVoiture($marque,$couleur,$immat);
+        $v1->save();
+        
+        $tab_v = ModelVoiture::getAllVoitures();
+        $controller='voiture';
+        $view='updated';
+        $pagetitle='Validation';
+        $cheminview = array('view','view.php' );
+        require (File::build_path($cheminview));
+    }
 }
 ?>
