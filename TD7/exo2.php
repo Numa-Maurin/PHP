@@ -5,7 +5,7 @@
     "foo" => "bar",
     "bar" => "foo",
 	];
-	$_SESSION['tab'] =serialize($array);
+	$_SESSION['tab'] =$array;
 	$_SESSION['actif']=1;
 
 	echo $_SESSION['login'];
